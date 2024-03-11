@@ -1,4 +1,6 @@
 package com.assignment.currencyconverter.exchange.dto;
 
-public record GetExchangeRateRequestDto(String fromCurr, String toCurr) {
+import com.assignment.currencyconverter.model.enums.Currency;
+
+public record GetExchangeRateRequestDto(Currency fromCurr, Currency toCurr) {
 }

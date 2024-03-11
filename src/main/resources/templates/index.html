@@ -19,16 +19,24 @@
 
         <tr>
             <td style="padding-right: 20px">
-                <label for="fromCurrency">Currency:</label>
+                <label>Currency:</label>
             </td>
             <td>
-                <input id="fromCurrency" type="text" th:field="*{fromCurrency}">
+<!--                <input id="fromCurrency" type="text" th:field="*{fromCurrency}">-->
+                <select name="fromCurrency">
+                    <option th:each="curr : ${T(com.assignment.currencyconverter.model.enums.Currency).values()}"
+                            th:value="${curr}" th:text="${curr}"></option>
+                </select>
             </td>
             <td style="padding-right: 20px; padding-left: 20px">
-                <label for="toCurrency">To:</label>
+                <label>To:</label>
             </td>
             <td>
-                <input id="toCurrency" type="text" th:field="*{toCurrency}">
+<!--                <input id="toCurrency" type="text" th:field="*{toCurrency}">-->
+                <select name="toCurrency">
+                    <option th:each="curr2 : ${T(com.assignment.currencyconverter.model.enums.Currency).values()}"
+                            th:value="${curr2}" th:text="${curr2}"></option>
+                </select>
             </td>
         </tr>
         <tr>
