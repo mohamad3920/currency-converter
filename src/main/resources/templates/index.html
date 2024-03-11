@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Currency Converter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Currency Converter</h1>
+<table>
+    <form method="post" th:action="@{/converter}" th:object="${currencyConverterRequestDto}">
+        <tr>
+            <td>
+                <label for="amount">Amount:</label>
+            </td>
+            <td>
+                <input id="amount" type="text" th:field="*{amount}">
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding-right: 20px">
+                <label for="fromCurrency">Currency:</label>
+            </td>
+            <td>
+                <input id="fromCurrency" type="text" th:field="*{fromCurrency}">
+            </td>
+            <td style="padding-right: 20px; padding-left: 20px">
+                <label for="toCurrency">To:</label>
+            </td>
+            <td>
+                <input id="toCurrency" type="text" th:field="*{toCurrency}">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top: 30px">
+                <input type="submit" value="Submit"/>
+            </td>
+        </tr>
+    </form>
+
+    <tr>
+        <td style="padding-top: 30px">
+            <h4>Currency Converter Result:</h4>
+            <p th:text="'Amount: ' + ${amount}"/>
+            <p th:text="'with this rate: ' + ${rate}"/>
+        </td>
+    </tr>
+
+</table>
+</body>
+</html>
