@@ -29,7 +29,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = {ExchangeRateClient.class, ObjectMapper.class, RestTemplate.class})
-class ExchangeRateClientTest {
+class ExchangeRateClientUTest {
     @Autowired
     ExchangeRateClient exchangeRateClient;
     @MockBean

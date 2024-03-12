@@ -26,30 +26,30 @@ public class ExchangeRateClient implements Exchange {
 
     public GetExchangeRateResponseDto getRate(GetExchangeRateRequestDto requestDto) {
 
-//        return new GetExchangeRateResponseDto(new BigDecimal(2));
+        return new GetExchangeRateResponseDto(new BigDecimal(2));
 
-        log.debug("call exchange rate service to get rate for currency {} to {}", requestDto.fromCurr(), requestDto.toCurr());
-        HttpEntity<GetExchangeRateRequestDto> req = createHttpEntity(requestDto);
-        GetExchangeRateResponseDto response;
-        var url = applicationProperties.getExchange().getUrl();
-        try {
-            response = exchangeRestTemplate.postForEntity(
-                            url,
-                            req,
-                            GetExchangeRateResponseDto.class)
-                    .getBody();
-
-            if (response == null) {
-                log.error("exchange rate service response is null for currency {} to {}", requestDto.fromCurr(), requestDto.toCurr());
-                throw new CurrencyConverterException(CurrencyConverterErrorType.GENERAL_ERROR, "Currency Converter response is null");
-            }
-
-            log.debug("call exchange rate service to get rate for currency {} to {} was successful, response : {}", requestDto.fromCurr(), requestDto.toCurr(), response.rate());
-            return response;
-        } catch (Exception e) {
-            log.error("call exchange rate service to get rate for currency {} to {} was NOT successful", requestDto.fromCurr(), requestDto.toCurr(), e);
-            throw new CurrencyConverterException(CurrencyConverterErrorType.GENERAL_ERROR, e);
-        }
+//        log.debug("call exchange rate service to get rate for currency {} to {}", requestDto.fromCurr(), requestDto.toCurr());
+//        HttpEntity<GetExchangeRateRequestDto> req = createHttpEntity(requestDto);
+//        GetExchangeRateResponseDto response;
+//        var url = applicationProperties.getExchange().getUrl();
+//        try {
+//            response = exchangeRestTemplate.postForEntity(
+//                            url,
+//                            req,
+//                            GetExchangeRateResponseDto.class)
+//                    .getBody();
+//
+//            if (response == null) {
+//                log.error("exchange rate service response is null for currency {} to {}", requestDto.fromCurr(), requestDto.toCurr());
+//                throw new CurrencyConverterException(CurrencyConverterErrorType.GENERAL_ERROR, "Currency Converter response is null");
+//            }
+//
+//            log.debug("call exchange rate service to get rate for currency {} to {} was successful, response : {}", requestDto.fromCurr(), requestDto.toCurr(), response.rate());
+//            return response;
+//        } catch (Exception e) {
+//            log.error("call exchange rate service to get rate for currency {} to {} was NOT successful", requestDto.fromCurr(), requestDto.toCurr(), e);
+//            throw new CurrencyConverterException(CurrencyConverterErrorType.GENERAL_ERROR, e);
+//        }
     }
 
     private <T> HttpEntity<T> createHttpEntity(T request) {

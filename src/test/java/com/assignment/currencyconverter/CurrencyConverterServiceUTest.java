@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = {CurrencyConverterService.class})
 
-public class CurrencyConverterServiceTest {
+public class CurrencyConverterServiceUTest {
     @Autowired
     CurrencyConverterService currencyConverterService;
     @MockBean

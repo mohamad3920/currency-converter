@@ -17,12 +17,12 @@ public class CurrencyConverterController {
     private final CurrencyConverterService currencyConverterService;
 
     @GetMapping("/converter")
-    public String greetingForm(@ModelAttribute CurrencyConverterRequestDto currencyConverterRequestDto) {
+    public String converterForm(@ModelAttribute CurrencyConverterRequestDto currencyConverterRequestDto) {
         return "index";
     }
 
     @PostMapping("/converter")
-    public String greetingSubmit(@ModelAttribute @Valid CurrencyConverterRequestDto currencyConverterRequestDto, Model model) {
+    public String converterSubmit(@ModelAttribute @Valid CurrencyConverterRequestDto currencyConverterRequestDto, Model model) {
         var result = currencyConverterService.exchange(currencyConverterRequestDto);
         model.addAttribute("amount", result.amount());
         model.addAttribute("rate", result.rate());
