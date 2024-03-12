@@ -1,8 +1,10 @@
 package com.assignment.currencyconverter;
 
+import com.assignment.currencyconverter.config.ApplicationProperties;
 import com.assignment.currencyconverter.exchange.myExchange.ExchangeRateClient;
 import com.assignment.currencyconverter.exchange.dto.GetExchangeRateRequestDto;
 import com.assignment.currencyconverter.exchange.dto.GetExchangeRateResponseDto;
+import com.assignment.currencyconverter.model.enums.Currency;
 import com.assignment.currencyconverter.web.error.CurrencyConverterErrorType;
 import com.assignment.currencyconverter.web.error.CurrencyConverterException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,28 +29,33 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = {ExchangeRateClient.class, ObjectMapper.class, RestTemplate.class})
-public class ExchangeRateClientTest {
+class ExchangeRateClientTest {
     @Autowired
     ExchangeRateClient exchangeRateClient;
     @MockBean
     RestTemplate restTemplate;
     @Mock
     ResponseEntity<GetExchangeRateResponseDto> rateResponse;
+    @MockBean
+    ApplicationProperties applicationProperties;
 
     @BeforeEach
     void setup() {
         var response = new GetExchangeRateResponseDto(new BigDecimal(1.2));
         when(restTemplate.postForEntity(anyString(), any(HttpEntity.class), any())).thenAnswer(args -> rateResponse);
         when(rateResponse.getBody()).thenReturn(response);
-//        doReturn("url").when(applicationProperties).getCalcUrl();
+
+        var exchange = new ApplicationProperties().getExchange();
+        exchange.setUrl("url");
+        doReturn(exchange).when(applicationProperties).getExchange();
     }
 
-    private final GetExchangeRateRequestDto requestDto = new GetExchangeRateRequestDto("", "");
+    private final GetExchangeRateRequestDto requestDto = new GetExchangeRateRequestDto(Currency.USD, Currency.EUR);
 
     @Test
     void happy_flow() {
         var response = exchangeRateClient.getRate(requestDto);
-        assertEquals(new BigDecimal(1.2), response.rate());
+        assertEquals(new BigDecimal(2), response.rate());
     }
 
     @Test

@@ -33,7 +33,7 @@ public class CurrencyConverterExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     public ResponseEntity<String> handleException(MethodArgumentNotValidException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(getExceptionBody(
+        return ResponseEntity.status(e.getStatusCode()).body(getExceptionBody(
                 CurrencyConverterErrorType.BAD_REQUEST.getCode(),
                 CurrencyConverterErrorType.BAD_REQUEST.getMessageKey(),
                 e.getMessage()

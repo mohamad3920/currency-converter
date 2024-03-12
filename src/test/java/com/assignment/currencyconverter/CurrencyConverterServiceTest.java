@@ -1,8 +1,10 @@
 package com.assignment.currencyconverter;
 
+import com.assignment.currencyconverter.config.ApplicationProperties;
 import com.assignment.currencyconverter.exchange.myExchange.ExchangeRateClient;
 import com.assignment.currencyconverter.exchange.dto.GetExchangeRateResponseDto;
 import com.assignment.currencyconverter.model.CurrencyConverterRequestDto;
+import com.assignment.currencyconverter.model.enums.Currency;
 import com.assignment.currencyconverter.service.CurrencyConverterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import java.math.RoundingMode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = {CurrencyConverterService.class})
@@ -24,14 +27,19 @@ public class CurrencyConverterServiceTest {
     CurrencyConverterService currencyConverterService;
     @MockBean
     ExchangeRateClient exchangeRateClient;
+    @MockBean
+    ApplicationProperties applicationProperties;
 
     @BeforeEach
     void setup() {
         var response = new GetExchangeRateResponseDto(new BigDecimal(1.2));
         when(exchangeRateClient.getRate(any())).thenReturn(response);
+        var exchange = new ApplicationProperties().getExchange();
+        exchange.setUrl("url");
+        doReturn(exchange).when(applicationProperties).getExchange();
     }
 
-    private final CurrencyConverterRequestDto convertRequest = new CurrencyConverterRequestDto(new BigDecimal(100.0), "", "");
+    private final CurrencyConverterRequestDto convertRequest = new CurrencyConverterRequestDto(new BigDecimal(100.0), Currency.USD, Currency.EUR);
 
     @Test
     void happy_flow() {
